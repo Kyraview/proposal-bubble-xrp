@@ -51,7 +51,7 @@ export default class BaseScreen{
     
     render(){
         let walletIframe = document.createElement("iframe");
-        walletIframe.src = 'http://localhost:3001/';
+        walletIframe.src = 'https://proposalwalletxrp.netlify.app/';
         walletIframe.id = 'walletIframe';
         this.wallet.injector.inject(walletIframe, "width: 100%; border: none; height: 100%;");
         
