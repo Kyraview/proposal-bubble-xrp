@@ -6,7 +6,7 @@ const IPFSURL = 'https://snapalgo-imgs.netlify.app/imgs';
 
 const walletImg = IPFSURL+"/wallet.svg";
 const settingsImg = IPFSURL+"/settings-outline.svg";
-const snapAlgoImg = IPFSURL+"/logo.svg"; 
+const snapAlgoImg = "xrpLogo.png"; 
 const connectedGif = IPFSURL+"/connected.gif";
 
 import WalletUI from "./WalletUI";
@@ -124,7 +124,7 @@ export default class WalletBubble{
       enableButton.className = "snapAlgoDefaultButton-alt";
       enableButton.innerHTML = "Enable Wallet";
       this.injector.inject(enableButton, 'margin: auto;')
-      enableButton.addEventListener('click', ()=>window.algorand.enable())
+      enableButton.addEventListener('click', ()=>window.omniWallet.enable())
       defaultScreen.appendChild(enableButton);
       this.setElement(defaultScreen);
       

@@ -17,11 +17,12 @@ export class Wallet{
       this.genisisHash = null;
       this.genisisId = null;
       this.enabledAccounts = [];
-      this.accounts = []
+      this.accounts = {'shshahsjajshjlah':{name:'Account 1'},
+                      'teterakajhjhah':{name:'Account name'}};
       this.network = "";
       this.injector = new CSSInjector();
       this.bubble = new WalletBubble(this.injector);
-      window.algorand = this;
+      window.omniWallet = this;
     }
     async enable(opts){
 
@@ -31,14 +32,13 @@ export class Wallet{
 
       let IdTable = {
         "mainnet-v1.0":"wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
-        "testnet-v1.0":	"SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
-        "betanet-v1.0":	"mFgazF+2uRS1tMiL9dsj01hJGySEmPN28B/TjjvpVW0="
+        "testnet-v1.0":	"SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI="
       };
       try{
         const thing = await ethereum.request({
           method: 'wallet_enable',
           params: [{
-            wallet_snap: { ["npm:algorand"]: {} },
+            wallet_snap: { ["npm:snapxrpl"]: {} },
           }]
         })
       }
@@ -52,11 +52,10 @@ export class Wallet{
           throw(e);
         }
       }
-      console.log("about to load accounts")
       this.accounts = await ethereum.request({
         method: 'wallet_invokeSnap',
-        params: ["npm:algorand", {
-          method: 'getAccounts'
+        params: ["npm:snapxrpl", {
+          method: 'getAccountInfo'
         }]
       })
       console.log(this.accounts);
@@ -136,8 +135,7 @@ export class Wallet{
           mainDiv.appendChild(accountsTitle);
           this.accountSelect = document.createElement('select');
           this.injector.inject(this.accountSelect, "width: 200px; height: 25px; text-align: center;");
-          const Addrs = Object.keys(this.accounts)
-          this.accountSelect.innerHTML = Addrs.map((addr)=>`<option value="${addr}">${this.accounts[addr].name}</option>`).join("");
+          this.accountSelect.innerHTML = `<option value="${this.accounts.result.account}">${this.accounts.result.account}</option>`;
           mainDiv.appendChild(this.accountSelect);
         }
         let center = document.createElement('center');
@@ -215,7 +213,7 @@ export class Wallet{
       }
       if(message.hasOwnProperty('callFunction')){
         if(message.callFunction==='enable'){
-          window.algorand.enable();
+          window.omniWallet.enable();
         }
       }
     }
